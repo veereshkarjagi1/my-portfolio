@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veeresh Karjagi | Engineering Portfolio</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #050a10;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --teal: #4fd1c5;
+            --teal-glow: rgba(79, 209, 197, 0.4);
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --gradient: linear-gradient(90deg, #4fd1c5 0%, #a5f3bc 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .grid-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 1px 1px, rgba(79, 209, 197, 0.05) 1px, transparent 0);
+            background-size: 40px 40px; z-index: -1;
+        }
+
+        .circuit-lines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, var(--bg-body) 1px, transparent 1%) center, 
+                        linear-gradient(var(--bg-body) 1px, transparent 1%) center, rgba(79, 209, 197, 0.015);
+            background-size: 150px 150px; z-index: -2;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; background: rgba(5, 10, 16, 0.85);
+            backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-weight: 700; letter-spacing: 2px; font-size: 1.1rem; text-transform: uppercase; }
+        .logo span { color: var(--teal); }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--teal); }
+        .btn-view-resume { border: 1px solid var(--teal); padding: 8px 18px; border-radius: 8px; color: var(--teal); text-decoration: none; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-view-resume:hover { background: rgba(79, 209, 197, 0.1); box-shadow: 0 0 15px var(--teal-glow); }
+
+        /* Layout Utility */
+        section { padding: 100px 8% 50px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .tag { color: var(--teal); text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 10px; }
+        .title { font-size: 2.8rem; margin-bottom: 20px; }
+
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; gap: 50px; }
+        .hero-content { flex: 1; }
+        .hero-badge { background: rgba(79, 209, 197, 0.1); color: var(--teal); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(79, 209, 197, 0.2); margin-bottom: 25px; }
+        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; font-weight: 800; color: white; }
+        .hero h1 span { color: var(--teal); }
+        .hero-subtitle { font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 30px; }
+        .hero-subtitle span { color: var(--teal); margin: 0 10px; }
+        .hero-desc { color: var(--text-dim); max-width: 600px; margin-bottom: 40px; }
+        .hero-btns { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        
+        .btn-teal { background: var(--gradient); color: #050a10; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-teal:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(79, 209, 197, 0.3); }
+        .btn-outline { border: 1px solid var(--border); padding: 12px 24px; border-radius: 50px; color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-outline:hover { background: var(--bg-card); }
+
+        .hero-image { flex: 0.8; display: flex; justify-content: center; position: relative; }
+        .img-outer { width: 420px; height: 420px; border-radius: 50%; border: 2px dashed rgba(79, 209, 197, 0.3); padding: 15px; animation: spin 20s linear infinite; }
+        .img-inner { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; border: 5px solid var(--bg-body); animation: spinReverse 20s linear infinite; }
+        .img-inner img { width: 100%; height: 100%; object-fit: cover; }
+        .img-cap { position: absolute; bottom: -10px; background: rgba(11, 22, 35, 0.9); border: 1px solid var(--border); padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; color: var(--text-dim); backdrop-filter: blur(5px); }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* About & Education */
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 40px; height: 100%; }
+        .card-title { font-size: 1.5rem; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .card-title i { color: var(--teal); background: rgba(79, 209, 197, 0.1); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.1rem; }
+        
+        .check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .check-item { color: var(--text-dim); font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
+        .check-item i { color: var(--teal); font-size: 0.8rem; }
+
+        .edu-timeline { padding-left: 20px; border-left: 1px solid var(--border); }
+        .edu-item { position: relative; padding-bottom: 30px; }
+        .edu-item::before { content: ''; position: absolute; left: -26px; top: 5px; width: 10px; height: 10px; background: var(--teal); border-radius: 50%; box-shadow: 0 0 10px var(--teal); }
+        .edu-name { font-weight: 700; margin-bottom: 5px; }
+        .edu-meta { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 8px; }
+        .edu-badge { background: rgba(255, 215, 0, 0.1); color: #ffd700; padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+
+        /* Skills Chips */
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .skill-group h4 { font-size: 1.1rem; margin-bottom: 20px; }
+        .chips-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .chip { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 8px 16px; border-radius: 50px; font-size: 0.85rem; color: var(--text-dim); transition: 0.3s; }
+        .chip:hover { border-color: var(--teal); color: var(--teal); background: rgba(79, 209, 197, 0.05); }
+
+        /* Project Section */
+        .project-card { position: relative; }
+        .btn-toggle { background: transparent; border: 1px solid var(--border); color: var(--teal); padding: 8px 18px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 600; transition: 0.3s; }
+        .btn-toggle:hover { border-color: var(--teal); }
+        
+        .project-details { 
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; margin-top: 0;
+        }
+        .project-details.active { max-height: 1000px; margin-top: 30px; }
+        
+        .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .highlight-item { background: rgba(0,0,0,0.2); border: 1px solid var(--border); padding: 20px; border-radius: 12px; font-size: 0.9rem; color: var(--text-dim); display: flex; align-items: center; gap: 15px; }
+        .highlight-item::before { content: ''; width: 8px; height: 8px; background: #f6ad55; border-radius: 50%; flex-shrink: 0; }
+
+        /* Services Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .service-card { background: var(--bg-card); border: 1px solid var(--border); padding: 35px; border-radius: 20px; transition: 0.3s; }
+        .service-card:hover { border-color: var(--teal); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .service-icon { font-size: 1.5rem; color: #f6ad55; margin-bottom: 20px; display: block; }
+        .service-card h4 { font-size: 1.2rem; margin-bottom: 15px; color: white; }
+        .service-card p { color: var(--text-dim); font-size: 0.9rem; }
+
+        /* Contact Section */
+        .contact-flex { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; }
+        .contact-item { background: var(--bg-card); border: 1px solid var(--border); padding: 25px; border-radius: 15px; display: flex; align-items: center; gap: 20px; margin-bottom: 15px; transition: 0.3s; cursor: pointer; text-decoration: none; color: inherit; }
+        .contact-item:hover { border-color: var(--teal); background: rgba(79, 209, 197, 0.05); }
+        .contact-icon { width: 50px; height: 50px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 1.2rem; }
+        .contact-label { display: block; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 3px; }
+        .contact-value { font-weight: 500; font-size: 0.95rem; }
+
+        .form-box { background: var(--bg-card); border: 1px solid var(--border); padding: 40px; border-radius: 20px; }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 10px; font-weight: 600; }
+        .input-group input, .input-group textarea { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 10px; padding: 15px; color: white; outline: none; transition: 0.3s; }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 15px rgba(79, 209, 197, 0.1); }
+
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 150px; }
+            .hero-btns { justify-content: center; }
+            .split-grid, .skills-grid, .services-grid, .contact-flex, .highlights-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
+            .img-outer { width: 320px; height: 320px; }
+            nav { padding: 20px 5%; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+    <div class="circuit-lines"></div>
+
+    <nav>
+        <div class="logo">VEERESH <span>KARJAGI</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#project">Project</a></li>
+            <li><a href="#leadership">Leadership</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="btn-view-resume"><i class="far fa-file-alt"></i> View Resume</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-right">
+            <div class="hero-badge"><i class="fas fa-circle" style="font-size: 8px;"></i> Open to internships · 2026</div>
+            <h1>VEERESH<br><span>KARJAGI</span></h1>
+            <p class="hero-subtitle">Electronics & Communication Engineering Student <span>|</span> Embedded Systems <span>|</span> VLSI <span>|</span> Firmware Development</p>
+            <p class="hero-desc">I design and simulate electronic systems where firmware meets silicon — from microcontroller-based sensor interfaces in Embedded C to CMOS analog blocks in Cadence Virtuoso and LTspice. My focus is hardware-software co-design: building circuits and firmware that are efficient, measurable, and production-minded.</p>
+            <div class="hero-btns">
+                <a href="#project" class="btn-teal">View My Project <i class="fas fa-arrow-right"></i></a>
+                <a href="#contact" class="btn-outline"><i class="far fa-envelope"></i> Contact Me</a>
+                <a href="mailto:veereshkarjagi1@gmail.com" class="hero-desc" style="margin: 0; text-decoration: none;"><i class="fas fa-download"></i> Download Resume</a>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="zoom-in">
+            <div class="img-outer">
+                <div class="img-inner">
+                    <!-- IMAGE ADDED HERE -->
+                    <img src="prof. photo.jpeg" alt="Veeresh Karjagi">
+                </div>
+            </div>
+            <div class="img-cap">KLE Institute of Technology · Hubballi</div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">About</span>
+            <h2 class="title">Engineering at the hardware-software boundary</h2>
+            <p style="color: var(--text-dim); max-width: 700px; margin: 0 auto;">An Electronics and Communication Engineering student building depth across embedded firmware, integrated circuit design, and system simulation.</p>
+        </div>
+        <div class="split-grid">
+            <div class="card" data-aos="fade-right">
+                <h3 class="card-title">About Me</h3>
+                <p style="color: var(--text-dim);">I am pursuing a B.E. in Electronics and Communication Engineering at KLE Institute of Technology, Hubballi, with a specialization in embedded systems, VLSI design, and firmware development. My coursework and project work combine Embedded C programming on microcontrollers with analog and digital circuit design and simulation.</p>
+                <div class="check-list">
+                    <div class="check-item"><i class="fas fa-check"></i> Embedded Systems</div>
+                    <div class="check-item"><i class="fas fa-check"></i> VLSI Design</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Firmware Development</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Circuit Simulation</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Renewable Energy</div>
+                    <div class="check-item"><i class="fas fa-check"></i> IoT Systems</div>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-left">
+                <h3 class="card-title"><i class="fas fa-graduation-cap"></i> Education</h3>
+                <div class="edu-timeline">
+                    <div class="edu-item">
+                        <div class="edu-name">B.E. in Electronics and Communication Engineering</div>
+                        <div class="edu-meta">KLE Institute of Technology, Hubballi | 2023 - 2027</div>
+                        <span class="edu-badge">CGPA: 7.0 / 10.0</span>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-name">Class XII (PUC)</div>
+                        <div class="edu-meta">Pre-University Education</div>
+                        <span class="edu-badge" style="background: rgba(79, 209, 197, 0.1); color: var(--teal);">COMPLETED</span>
+                    </div>
+                    <div class="edu-item" style="padding-bottom: 0;">
+                        <div class="edu-name">Class X (SSLC)</div>
+                        <div class="edu-meta">Secondary Education</div>
+                        <span class="edu-badge" style="background: rgba(79, 209, 197, 0.1); color: var(--teal);">COMPLETED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Skills</span>
+            <h2 class="title">Technical Skills</h2>
+            <p style="color: var(--text-dim);">Tools, languages, and domains I use to take an idea from schematic and simulation to working firmware.</p>
+        </div>
+        <div class="skills-grid">
+            <div class="card" data-aos="fade-up">
+                <div class="card-title"><i class="fas fa-microchip"></i> Embedded Systems</div>
+                <div class="chips-container">
+                    <span class="chip">Microcontrollers</span><span class="chip">8051</span><span class="chip">ARM Cortex</span>
+                    <span class="chip">Embedded C</span><span class="chip">Sensor Interfacing</span><span class="chip">GPIO</span>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-title"><i class="fas fa-project-diagram"></i> VLSI & Electronics</div>
+                <div class="chips-container">
+                    <span class="chip">CMOS Technology</span><span class="chip">Analog/Digital IC Design</span><span class="chip">Cadence Virtuoso</span>
+                    <span class="chip">LTspice</span><span class="chip">Circuit Simulation</span>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-title"><i class="fas fa-code"></i> Programming & Tools</div>
+                <div class="chips-container">
+                    <span class="chip">C</span><span class="chip">Python</span><span class="chip">MATLAB/Simulink</span>
+                    <span class="chip">SQL</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Keil uVision</span>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-title"><i class="fas fa-shield-alt"></i> Domains</div>
+                <div class="chips-container">
+                    <span class="chip">Renewable Energy</span><span class="chip">Cyber Security</span><span class="chip">Digital Electronics</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Services</span>
+            <h2 class="title">Areas of Technical Expertise</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up">
+                <i class="fas fa-microchip service-icon"></i>
+                <h4>Embedded Systems Development</h4>
+                <p>Microcontroller-based design with Embedded C, GPIO control, and sensor interfacing across 8051 and ARM Cortex platforms.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--teal); background: rgba(79, 209, 197, 0.02);">
+                <i class="fas fa-layer-group service-icon"></i>
+                <h4>VLSI & Circuit Design</h4>
+                <p>CMOS technology, analog and digital IC design, schematic capture and simulation in Cadence Virtuoso and LTspice.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-wave-square service-icon"></i>
+                <h4>MATLAB / Simulink Modeling</h4>
+                <p>Engineering simulation and system modeling for signal behaviour, control blocks, and performance evaluation.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up">
+                <i class="fas fa-wifi service-icon"></i>
+                <h4>IoT & Hardware Prototyping</h4>
+                <p>Sensor-driven automation systems and hardware-software integration for connected embedded prototypes.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-tools service-icon"></i>
+                <h4>PCB & Circuit Prototyping</h4>
+                <p>Practical electronics work: breadboard to PCB prototyping, testing, and bring-up of analog and digital circuits.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-cubes service-icon"></i>
+                <h4>Technical Engineering Projects</h4>
+                <p>End-to-end project work spanning electronics, embedded firmware, simulation, and hardware-software co-design.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECT -->
+    <section id="project">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Featured Project</span>
+            <h2 class="title">Switched Capacitor Circuit Design</h2>
+            <p style="color: var(--text-dim);">A focused VLSI and analog electronics design project exploring area-efficient, resistor-less signal processing.</p>
+        </div>
+        
+        <div class="card project-card" data-aos="zoom-in">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <i class="fas fa-microchip" style="font-size: 1.5rem; color: var(--teal); background: rgba(79, 209, 197, 0.1); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px;"></i>
+                <button class="btn-toggle" onclick="toggleProject()">View Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Switched Capacitor Circuit Design</h3>
+            <p style="color: var(--text-dim); margin-bottom: 20px;">An analog and mixed-signal design study replacing resistors with clock-driven CMOS switch and capacitor networks — reducing silicon area while preserving signal integrity for ADC and DAC front-ends.</p>
+            <div class="chips-container">
+                <span class="chip" style="color: #f6ad55; border-color: rgba(246, 173, 85, 0.3);">Cadence Virtuoso</span>
+                <span class="chip" style="color: #f6ad55; border-color: rgba(246, 173, 85, 0.3);">LTspice</span>
+                <span class="chip" style="color: #f6ad55; border-color: rgba(246, 173, 85, 0.3);">CMOS</span>
+            </div>
+
+            <div class="project-details" id="pDetail">
+                <span class="tag" style="font-size: 0.7rem; margin-bottom: 20px;">Technical Highlights</span>
+                <div class="highlights-grid">
+                    <div class="highlight-item">Designed resistor-less analog circuits using CMOS switches.</div>
+                    <div class="highlight-item">Focused on reducing silicon area for integrated circuit designs.</div>
+                    <div class="highlight-item">Developed signal-processing models using clock-driven charge transfer.</div>
+                    <div class="highlight-item">Targeted high-performance ADC and DAC architectures.</div>
+                    <div class="highlight-item">Evaluated circuit noise margins and frequency response.</div>
+                    <div class="highlight-item">Optimized signal integrity for low-power applications.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERSHIP -->
+    <section id="leadership">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Leadership</span>
+            <h2 class="title">Leadership & Professional Involvement</h2>
+            <p style="color: var(--text-dim);">Technical community work alongside academics — coordinating outreach for a professional engineering society.</p>
+        </div>
+        <div class="card" data-aos="fade-up">
+            <div style="display: flex; gap: 20px;">
+                <i class="fas fa-users" style="font-size: 1.2rem; color: var(--teal); background: rgba(79, 209, 197, 0.1); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 15px; flex-shrink: 0;"></i>
+                <div>
+                    <h4 style="font-size: 1.3rem;">IEEE MTTS Student Branch</h4>
+                    <p style="color: var(--teal); font-size: 0.85rem; font-weight: 600; margin-bottom: 15px;">Executive Committee Member — PR-Head · 2026</p>
+                    <p style="color: var(--text-dim);">Coordinates technical outreach and public relations for the Microwave Theory and Techniques Society student branch — promoting technical events, communicating with students and faculty, and helping grow participation in workshops and activities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section style="padding-top: 0;">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Certifications</span>
+            <h2 class="title">Certifications & Technical Learning</h2>
+        </div>
+        <div class="services-grid">
+            <div class="card" style="padding: 25px;" data-aos="fade-up">
+                <i class="fas fa-award" style="color: #f6ad55; margin-bottom: 15px; display: block;"></i>
+                <h4 style="font-size: 1rem; margin-bottom: 5px;">Microstrip Patch Antenna Design Workshop</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">IEEE AP-S</p>
+            </div>
+            <div class="card" style="padding: 25px;" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-award" style="color: #f6ad55; margin-bottom: 15px; display: block;"></i>
+                <h4 style="font-size: 1rem; margin-bottom: 5px;">Ethical Hacking Workshop</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">NITK SURATHKAL</p>
+            </div>
+            <div class="card" style="padding: 25px;" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-award" style="color: #f6ad55; margin-bottom: 15px; display: block;"></i>
+                <h4 style="font-size: 1rem; margin-bottom: 5px;">Introduction to Cyber Security</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">SIMPLILEARN</p>
+            </div>
+            <div class="card" style="padding: 25px;" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-award" style="color: #f6ad55; margin-bottom: 15px; display: block;"></i>
+                <h4 style="font-size: 1rem; margin-bottom: 5px;">Advanced C Programming Concepts</h4>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">ISCT</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Contact</span>
+            <h2 class="title">Let's Connect</h2>
+            <p style="color: var(--text-dim);">Let's Build Something Innovative Together.</p>
+        </div>
+        <div class="contact-flex">
+            <div data-aos="fade-right">
+                <a href="mailto:veereshkarjagi1@gmail.com" class="contact-item">
+                    <div class="contact-icon"><i class="far fa-envelope"></i></div>
+                    <div><span class="contact-label">EMAIL</span><div class="contact-value">veereshkarjagi1@gmail.com</div></div>
+                </a>
+                <a href="tel:+919741592767" class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div><span class="contact-label">PHONE</span><div class="contact-value">+91-9741592767</div></div>
+                </a>
+                <a href="https://linkedin.com/in/veereshkarjagi" target="_blank" class="contact-item">
+                    <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                    <div><span class="contact-label">LINKEDIN</span><div class="contact-value">linkedin.com/in/veereshkarjagi</div></div>
+                </a>
+            </div>
+            <div class="form-box" data-aos="fade-left">
+                <!-- FIXED CONTACT FORM ACTION -->
+                <form action="https://formspree.io/f/mjybgpvn" method="POST">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>NAME</label>
+                            <input type="text" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>EMAIL</label>
+                            <input type="email" name="email" placeholder="you@company.com" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>MESSAGE</label>
+                        <textarea name="message" rows="5" placeholder="Tell me about the role, project, or opportunity." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-teal" style="margin-top: 25px; border: none; cursor: pointer;">Send Message <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 40px 8%; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.85rem;">
+        © 2024 Veeresh Karjagi | Electronics & Communication Engineer
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true, offset: 100 });
+
+        function toggleProject() {
+            const detail = document.getElementById('pDetail');
+            const btn = document.querySelector('.btn-toggle');
+            detail.classList.toggle('active');
+            
+            if(detail.classList.contains('active')) {
+                btn.innerHTML = 'Hide Details <i class="fas fa-chevron-up"></i>';
+            } else {
+                btn.innerHTML = 'View Details <i class="fas fa-chevron-down"></i>';
+            }
+        }
+    </script>
+</body>
+</html>
